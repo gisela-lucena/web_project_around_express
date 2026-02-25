@@ -1,19 +1,15 @@
-const express = require('express');
+import express from 'express';
+import userRouter from './routes/users.js';
+import cardRouter from './routes/cards.js';
 
 const app = express();
 const PORT = 3000;
 
-const usersRouter = require('./routes/users');
-const cardsRouter = require('./routes/cards');
+app.use(express.json());
 
-app.use('/users', usersRouter);
-app.use('/cards', cardsRouter);
-
-app.use((req, res) => {
-  res.status(404).send({ message: 'A solicitação não foi encontrada' });
-});
-
+app.use('/users', userRouter);
+app.use('/cards', cardRouter);
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });

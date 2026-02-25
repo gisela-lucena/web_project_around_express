@@ -23,20 +23,17 @@ userRouter.get('/:userId', (req, res) => {
 
   fs.readFile(usersPath, 'utf8', (err, data) => {
     if (err) {
-      return res.status(500).send({ message: 'Erro ao ler os usuários' });
+      return res.status(500).send({ message: 'Erro ao ler o usuário' });
     }
-
     const users = JSON.parse(data);
     const user = users.find(u => u._id === userId);
-
     if (!user) {
       return res
         .status(404)
         .send({ message: 'ID do usuário não encontrado' });
     }
-
     res.send(user);
   });
 });
 
-module.exports = userRouter;
+export default userRouter;

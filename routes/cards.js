@@ -16,4 +16,4 @@ cardRouter.get('/', (req, res) => {
   });
 });
 
-module.exports = cardRouter;
+export default cardRouter;
