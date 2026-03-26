@@ -13,8 +13,8 @@ app.use('/cards', cardRouter);
 
 // Middleware para rotas não encontradas
 app.use((req, res) => {
-  res.status(404).json({ 
-    message: 'Rota não encontrada' 
+  res.status(404).json({
+    message: 'Rota não encontrada',
   });
 });
 
@@ -23,9 +23,9 @@ app.listen(PORT, () => {
 });
 
 mongoose.connect('mongodb://localhost:27017/aroundb')
-.then(() => {
-  console.log('Conectado ao MongoDB');
-})
-.catch(err => {
-  console.error('Erro ao conectar ao MongoDB', err);
-});
+  .then(() => {
+    console.log('Conectado ao MongoDB');
+  })
+  .catch(err => {
+    console.error('Erro ao conectar ao MongoDB', err);
+  });
