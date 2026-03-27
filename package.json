@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "editor.formatOnSave": true,
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
@@ -24,11 +23,8 @@
   "devDependencies": {
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.5",
-    "nodemon": "^3.1.11",
-    "prettier": "^3.8.1"
+    "nodemon": "^3.1.11"
   },
   "dependencies": {
     "express": "^5.2.1",

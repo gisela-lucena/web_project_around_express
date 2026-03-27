@@ -37,3 +37,4 @@ userRouter.get('/:userId', (req, res) => {
 });
 
 export default userRouter;
+

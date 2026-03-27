@@ -4,6 +4,12 @@
     "no-underscore-dangle": "off",
     "no-console": "off",
     "linebreak-style": "off",
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "editor.formatOnSave": true
+    
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
   }
 }
