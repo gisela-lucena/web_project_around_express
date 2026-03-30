@@ -1,20 +1,10 @@
 import { Router } from 'express';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { getCards, createCard, deleteCard } from '../controllers/cards.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const cardsPath = path.join(__dirname, '../data/cards.json');
 const cardRouter = Router();
 
-cardRouter.get('/', (req, res) => {
-  fs.readFile(cardsPath, 'utf8', (err, data) => {
-    if (err) {
-      return res.status(500).send({ message: 'Erro ao ler os cards' });
-    }
-    return res.send(JSON.parse(data));
-  });
-});
+cardRouter.get('/', getCards);
+cardRouter.post('/', createCard);
+cardRouter.delete('/:cardId', deleteCard);
 
 export default cardRouter;

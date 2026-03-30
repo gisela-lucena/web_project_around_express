@@ -8,6 +8,14 @@ const PORT = 3000;
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+  req.user = {
+    _id: '69c6f4e1c4bed68f263673b8',
+  };
+
+  next();
+});
+
 app.use('/users', userRouter);
 app.use('/cards', cardRouter);
 
