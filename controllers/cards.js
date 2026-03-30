@@ -1,41 +1,60 @@
 import { Card } from '../models/cards.js';
-import mongoose from 'mongoose';
 
-export const getCards = (req, res) => {
-  Card.find({})
-    .then((cards) => res.json(cards))
-    .catch((err) =>
-      res.status(500).json({ message: 'Erro ao buscar cartões', error: err.message  })
-   );
-  };
-
-export const createCard = (req, res) => {
-  console.log('USER ID:', req.user._id);
-  const { name, link } = req.body;
-  const owner = req.user?._id;
-
-    Card.create({ name, link, owner })
-      .then((card) => res.status(201).json(card))
-      .catch((err) =>
-        res.status(400).json({ message: 'Erro ao criar cartão', error: err.message })
-    );
+export const getCards = async (req, res, next) => {
+  try {
+    const cards = await Card.find({});
+    res.json(cards);
+  } catch (err) {
+    next(err);
+  }
 };
 
-export const deleteCard = (req, res) => {
-  const { cardId } = req.params;
+export const createCard = async (req, res, next) => {
+ try {
+  const { name, link } = req.body;
+  const owner = req.user._id;
 
-    if (!mongoose.Types.ObjectId.isValid(cardId)) {
-    return res.status(400).json({ message: 'ID inválido' });
-  }
-    
-   Card.findByIdAndDelete(cardId)
-        .then(card =>{
-          if(!card) {
-            return res.status(404).json({ message: 'Cartão não encontrado' });
-          }
-          return res.json({message: 'Cartão deletado' });
-        })
-        .catch(() => 
-          res.status(500).json({ message: 'Erro ao deletar cartão' })
-      );
-    };
+  const card = await Card.create({ name, link, owner });
+  res.status(201).json(card);
+ } catch (err) {
+    next(err);
+ }
+};
+
+export const deleteCard = async (req, res, next) => {
+  try {
+    const { cardId } = req.params;
+
+    const card = await Card.findById(cardId).orFail();
+    await card.deleteOne();
+    res.json({ message: 'Cartão deletado' });
+  } catch (err) {
+    next(err);
+  }};
+
+  export const likeCard = async (req, res, next) => {
+    try {
+      const { cardId } = req.params;
+
+      const card = await Card.findByIdAndUpdate(
+        cardId,
+        { $addToSet: { likes: req.user._id } },
+        { new: true }
+      ).orFail();
+      res.json(card);
+    } catch (err) {
+      next(err);
+    } };
+
+  export const dislikeCard = async (req, res, next) => {
+    try {
+      const { cardId } = req.params;
+      const card = await Card.findByIdAndUpdate(
+        cardId,
+        { $pull: { likes: req.user._id } },
+        { new: true }
+      ).orFail();
+      res.json(card);
+    } catch (err) {
+      next(err);
+    } };
